@@ -3,6 +3,7 @@
 import * as React from "react";
 import {
   ChevronDown,
+  Loader2,
 } from "lucide-react";
 import {
   ColumnDef,
@@ -42,11 +43,19 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  loading?: boolean;
+  error?: string | null;
+  filterColumn?: string;
+  filterPlaceholder?: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  loading = false,
+  error = null,
+  filterColumn,
+  filterPlaceholder = "Filter...",
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -75,25 +84,27 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-32 text-red-500">
+        <p>Error loading data: {error}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
       <div className="flex items-center py-4 space-x-2">
-        <Input
-          placeholder="Filter barcode..."
-          value={(table.getColumn("barcode")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("barcode")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <Input
-          placeholder="Filter tipe..."
-          value={(table.getColumn("tipe")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("tipe")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        {filterColumn && (
+          <Input
+            placeholder={filterPlaceholder}
+            value={(table.getColumn(filterColumn)?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn(filterColumn)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -142,7 +153,19 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {loading ? (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  <div className="flex items-center justify-center">
+                    <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                    Loading...
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row: Row<TData>) => (
                 <TableRow
                   key={row.id}
