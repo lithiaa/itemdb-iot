@@ -6,7 +6,7 @@ import { iotColumns, iotGroupedColumns } from "@/lib/iot-columns";
 import { fetchIoTData, fetchIoTGroupedData } from "@/lib/api";
 import { IoTItem, IoTGrouped } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
