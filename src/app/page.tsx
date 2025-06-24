@@ -80,7 +80,7 @@ export default function Home() {
     <div className="container mx-auto py-10">
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight text-center md:text-left">
-          Data IoT Management
+          Data Item
         </h1>
       </div>
 
@@ -88,14 +88,14 @@ export default function Home() {
         <TabsList
           className="grid w-64 grid-cols-2 mx-auto md:mx-0"
         >
-          <TabsTrigger value="iot">Individual</TabsTrigger>
-          <TabsTrigger value="grouped">Group</TabsTrigger>
+          <TabsTrigger value="iot">Satuan</TabsTrigger>
+          <TabsTrigger value="grouped">Grup</TabsTrigger>
         </TabsList>
 
         <TabsContent value="iot" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Data IoT Individual</CardTitle>
+              <CardTitle>Data Satuan</CardTitle>
               <div className="flex justify-end">
                 <Button onClick={loadIoTData} disabled={loadingIoT}>
                   {loadingIoT ? "Loading..." : "Refresh Data"}
@@ -118,14 +118,14 @@ export default function Home() {
         <TabsContent value="grouped" className="space-y-4">
           <Tabs value={activeGroupedTab} onValueChange={setActiveGroupedTab} className="w-full">
             <TabsList className="grid w-64 grid-cols-2 mx-auto md:mx-0 mb-4">
-              <TabsTrigger value="tipe">By Tipe</TabsTrigger>
-              <TabsTrigger value="jenis">By Jenis</TabsTrigger>
+              <TabsTrigger value="tipe">Tipe</TabsTrigger>
+              <TabsTrigger value="jenis">Jenis</TabsTrigger>
             </TabsList>
 
             <TabsContent value="tipe">
               <Card>
                 <CardHeader>
-                  <CardTitle>Data IoT Grouped by Tipe</CardTitle>
+                  <CardTitle>Data Grouped by Tipe</CardTitle>
                   <div className="flex justify-end">
                     <Button onClick={loadGroupedTipeData} disabled={loadingGroupedTipe}>
                       {loadingGroupedTipe ? "Loading..." : "Refresh Data"}
@@ -148,7 +148,7 @@ export default function Home() {
             <TabsContent value="jenis">
               <Card>
                 <CardHeader>
-                  <CardTitle>Data IoT Grouped by Jenis</CardTitle>
+                  <CardTitle>Data Grouped by Jenis</CardTitle>
                   <div className="flex justify-end">
                     <Button onClick={loadGroupedJenisData} disabled={loadingGroupedJenis}>
                       {loadingGroupedJenis ? "Loading..." : "Refresh Data"}
